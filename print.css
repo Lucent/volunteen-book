@@ -1,0 +1,89 @@
+@page	{
+	size: 6.25in 9.25in;
+}
+@page :left	{ margin-left: var(--gutter); }
+@page :right{ margin-right: var(--gutter); }
+:root {
+	--gutter:			0.2in;
+	--bleed:			0.125in;
+	--margin:			0;
+	--pagenumber:		0.3in;
+	--inside-margin:	1rem;
+	--inside-half:		calc(var(--inside-margin) / 2);
+	--edge-top:			8.2em;
+	--edge-year:		6em;
+	--section-padding:	0.8rem;
+}
+
+p			{ margin: 0; }
+img			{ width: 100%; }
+
+.template	{ display: none; }
+html		{ margin: 0 var(--bleed); } /* this can handle left-right bleed, but not top-bottom */
+body		{ margin: 0; padding: 0 var(--margin); }
+/*.odd body	{ margin-left: var(--gutter); }
+.even body	{ margin-right: var(--gutter); }*/
+thead h1	{ margin: calc(var(--margin) + var(--bleed)) var(--inside-half) 0; padding: 0 0.7em 0.7em; }
+tfoot td	{ height: calc(var(--margin) + var(--bleed) - var(--inside-margin)); }
+
+table, tr, th, td, thead, tbody, tfoot	{ margin: 0; padding: 0; border: 0; }
+*		{ -webkit-print-color-adjust: exact; color-adjust: exact; }
+
+table	{ page-break-after: avoid; break-after: avoid; page-break-before: always; }
+section	{ page-break-inside: avoid; break-inside: avoid; }
+section	{ box-decoration-break: clone; }
+
+th		{ text-align: left; }
+html	{ font-family: "Helvetica Neue"; }
+p, h3	{ color: black; /* cmyk 270% */ }
+body	{ font-size: 0.5em; }
+main	{ column-count: 3; column-gap: var(--inside-margin); }
+section	{ border-radius: 0.5em; padding: var(--section-padding) 0; margin: var(--inside-margin) 0; background-color: white; box-sizing: border-box; display: flex; flex-direction: column; border: 1pt solid; }
+section	{ RASTERIZED-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+table h1{ padding: 0 0.7em 0.7em; border-bottom: thin solid rgb(101, 119, 134); font-size: 3em; }
+
+.odd table h1	{ text-align: right; }
+.even table h1	{ text-align: left; }
+.odd body > footer	{ right: var(--pagenumber); }
+.even body > footer	{ left: var(--pagenumber); }
+h3, h4	{ margin: 0; font-size: 1.3em; }
+h4		{ font-size: 1.1em; }
+h4, p > span, time, em, footer > svg { color: hsl(207, 14%, 43%); }
+h4, time{ font-weight: normal; }
+.Icon	{ object-fit: cover; border-radius: 50%; margin-right: 0.5em; }
+.Icon, .Logo	{ height: 3em; }
+p		{ font-size: 1.7em; letter-spacing: -0.02em; margin: var(--section-padding); word-break: break-word; }
+.Compact p	{ margin-top: 0; }
+p ~ img	{ width: 100%; }
+header	{ display: flex; justify-content: space-between; margin: 0 var(--section-padding); }
+.Compact header	{ display: none; }
+div		{ display: flex; align-items: center; }
+
+section > footer	{ flex-grow: 1; display: flex; align-items: flex-end; justify-content: space-between; line-height: 1; font-size: 1.2em; margin: var(--section-padding) var(--section-padding) 0; }
+section > footer > svg	{ height: 0.9em; fill: currentColor; }
+.Compact section > footer > :not(time)	{ display: none; }
+main svg + svg, em + svg	{ margin-left: 1.2em; }
+em		{ font-style: normal; margin-left: 0.3em; }
+time	{ flex-grow: 1; text-align: right; }
+table	{ width: 100%; }
+
+article	{ display: flex; flex-direction: column; justify-content: center; height: 99vh; text-align: center; font-family: "Palatino Linotype"; }
+article > *		{ font-weight: normal; }
+article > h1	{ font-size: 9em; text-transform: uppercase; letter-spacing: 0.3em; margin: 0; margin-right: -0.3em; }
+article > h1 + h1	{ font-size: 7em; }
+article > nav	{ font-size: 4em; margin-top: 20vh; }
+article > h2	{ font-size: 6em; margin-top: 10vh; }
+
+body > footer	{ position: fixed; bottom: var(--pagenumber); font-size: 0.8rem; }
+body	{ counter-reset: page -1; counter-reset: year 2012; }
+body > footer::after	{ counter-increment: page; content: counter(page); }
+abbr::after		{ position: fixed; right: 0; top: calc(var(--edge-top) + var(--edge-year) * counter(idx)); border: thin solid black; font-size: 2em; color: white; background-color: #bdcabd; padding: 0.4em 0.2em; height: var(--edge-year); writing-mode: vertical-rl; content: counter(year); letter-spacing: 0.5em; }
+
+.Flourish, section	{ color: hsl(var(--hue), 19%, 90%); fill: currentColor; }
+html				{ background-color: hsl(var(--hue), 33%, 97%); }
+a, a:visited, .Logo	{ color: #1da1f2; text-decoration: none; fill: currentColor; }
+
+.Flourish			{ width: calc(100% - 2 * var(--bleed)); position: fixed; z-index: -1; left: var(--bleed); top: var(--bleed); }
+.Flourish + .Flourish	{ top: calc(100vw - var(--bleed)); }
+
+#count-0			{ font-size: 1rem; }
